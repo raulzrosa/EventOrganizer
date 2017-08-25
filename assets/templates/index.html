@@ -1,0 +1,94 @@
+<div ng-controller='UserController'>
+	<div ng-controller='EventController'>
+		<div class="row" >
+	  		<div  id='index' >
+				<div   class='jumbotron'>
+					<h4>{{user.name}}</h4>
+					<div class="form-group">
+						<label>Description</label>
+						<textarea ng-model='description' type="text" class="form-control" placeholder="Description"></textarea>
+					</div>
+					<div class="form-group">
+						<label>Initial Time</label>
+						<input ng-model='initTime' type="text" class="form-control" id="date_timepicker_start" placeholder="Initial Time">
+					</div>
+					<div class="form-group">
+						<label>End Time</label>
+						<input ng-model='endTime' type="text" class="form-control" id="date_timepicker_end" placeholder="End Time">
+					</div>
+					<script src="/js/create_event.js"></script>
+					<button ng-click = 'createEvent()'   ng-show='addButton' class="btn btn-primary btn-lg btn-block">Add Event</button>
+					<button ng-click = 'editEvent()'  ng-show='editButton' class="btn btn-success btn-lg btn-block">Confirm Edition</button>
+					<button ng-click = 'logout()'   class="btn btn-danger btn-lg btn-block">Logout</button>
+				</div>
+	  		</div>
+		  	<div class="col-sm-4" id='index'>
+				<ol class="breadcrumb">
+				  <li class="breadcrumb-item active"><h2>My Events</h2></li>
+				</ol>
+				<div  class="text-left">
+					<div ng-repeat="event in user.events | orderBy:'-initTime'">
+						<br>
+						<div class="card">
+			  				<div class="card-header">
+			   					{{event.initTime}}
+			 				</div>
+			  				<div class="card-body">
+			    				<h4 class="card-title">{{event.description}}</h4>
+			    				<p class="card-text">{{event.initTime}} - {{event.endTime}}</p>
+			    				<div class="input-group">
+      								<input ng-model='login_share' type="text" class="form-control" placeholder="Enter a user to share" aria-label="Enter a user to share">
+      								<span class="input-group-btn">
+        								<button ng-click = 'shareEvent(event.id, login_share)' class="btn btn-secondary" type="button">
+        									<i class="fa fa-share" aria-hidden="true"></i> Share
+        								</button>
+  									</span>
+    							</div>
+    							<br>
+								<button ng-click = 'loadEvent(event.id)'  class="btn btn-primary">
+									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit&nbsp&nbsp
+								</button>
+								<button ng-click = 'deleteEvent(event.id, $index)'  class="btn btn-primary">
+									<i class="fa fa-trash" aria-hidden="true"></i> Delete
+								</button>
+			  				</div>
+						</div>	
+				    </div>
+				</div>
+		  	</div>
+			<div class="col-sm-4" id='index'>
+				<ol class="breadcrumb">
+				  <li class="breadcrumb-item active"><h2>Shared Events</h2></li>
+				</ol>
+				<div  class="text-left">
+					<div ng-repeat="event in user.events_shared | orderBy:'-initTime'">
+						<br>
+						<div class="card">
+			  				<div class="card-header">
+			   					{{event.initTime}}
+			 				</div>
+			  				<div class="card-body">
+			    				<h4 class="card-title">{{event.description}} {{event.owner.name}}</h4>
+			    				<p class="card-text">{{event.initTime}} - {{event.endTime}} </p>
+								<div class="input-group">
+      								<input ng-model='login_share' type="text" class="form-control" placeholder="Enter a user to share" aria-label="Enter a user to share">
+      								<span class="input-group-btn">
+        								<button ng-click = 'shareEvent(event.id, login_share)' class="btn btn-secondary" type="button">
+        									<i class="fa fa-share" aria-hidden="true"></i> Share
+        								</button>
+  									</span>
+    							</div>
+    							<br>
+								<button ng-click = 'deleteShareEvent(event.id, $index)'  class="btn btn-primary ">
+									<i class="fa fa-trash" aria-hidden="true"></i> Delete
+								</button>
+			  				</div>
+						</div>	
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
